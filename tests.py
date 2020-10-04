@@ -6,10 +6,10 @@ from model import DAGMMArrhythmia
 
 
 def test_dagmm():
-    net = DAGMMArrhythmia()
+    net = DAGMMArrhythmia().cuda()
 
     input = np.random.random([5, 274])
-    input = torch.autograd.Variable(torch.from_numpy(input).float())
+    input = torch.autograd.Variable(torch.from_numpy(input).float()).cuda()
 
     out = net(input)
     print(out)

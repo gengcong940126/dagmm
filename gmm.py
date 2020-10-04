@@ -94,7 +94,7 @@ class Mixture(nn.Module):
             #det_sigma = torch.from_numpy(det_sigma).float()
 
             out = -0.5 * torch.mm(torch.mm(diff.view(1, -1), inv_sigma), diff)
-            out = (self.Phi * torch.exp(out)) / (torch.sqrt(2. * np.pi * det_sigma))
+            out = (self.Phi * torch.exp(out)) / (torch.sqrt(2. * np.pi * det_sigma).cuda())
             if with_log:
                 out = -torch.log(out)
             out_values.append(float(out.data.cpu().numpy()))
@@ -145,4 +145,4 @@ class Mixture(nn.Module):
                 num += to_add
 
         denom = torch.sum(affiliations)
-        self.Sigma.data = (num / denom).data + self.eps_Sigma
+        self.Sigma.data = (num / denom).data + self.eps_Sigma.cuda()
